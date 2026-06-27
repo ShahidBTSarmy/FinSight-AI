@@ -608,11 +608,11 @@ Rely on your financial intelligence database up to 2026. Be highly realistic, qu
     return res.json(parsed);
 
   } catch (error: any) {
-    console.error('Gemini API Error, falling back to dynamic generator:', error);
+    console.warn('Gemini API Warning (falling back to dynamic generator):', error?.message || error);
     const fallbackReport = generateDynamicMockReport(companyName);
     return res.json({
       ...fallbackReport,
-      note: "Using FinSight Local Emulation Engine due to an API processing error. Ensure your GEMINI_API_KEY is active and valid."
+      note: "Using FinSight Local Emulation Engine due to an API processing limit or error. Ensure your GEMINI_API_KEY is active and valid."
     });
   }
 });
@@ -628,10 +628,7 @@ app.post('/api/chat', async (req, res) => {
 
   const client = getGeminiClient();
 
-  // If no API key configured, use high-fidelity, highly realistic fallback conversations
-  if (!client) {
-    console.warn('GEMINI_API_KEY is not configured for Chat. Providing smart client-side conversational responses.');
-    
+  const getChatFallback = () => {
     let answer = "";
     const cleanMsg = latestUserMsg.toLowerCase();
     
@@ -690,7 +687,13 @@ Please feel free to ask questions like:
     }
 
     answer += `\n\n*(Note: To enable fully dynamic, real-time Gemini Copilot conversations, supply a **GEMINI_API_KEY** under Settings).*`;
-    return res.json({ reply: answer });
+    return answer;
+  };
+
+  // If no API key configured, use high-fidelity, highly realistic fallback conversations
+  if (!client) {
+    console.log('GEMINI_API_KEY is not configured for Chat. Providing smart client-side conversational responses.');
+    return res.json({ reply: getChatFallback() });
   }
 
   try {
@@ -727,8 +730,8 @@ Guidelines:
     return res.json({ reply: response.text || "Copilot was unable to formulate a response." });
 
   } catch (error: any) {
-    console.error('Gemini Chat Error:', error);
-    return res.status(500).json({ error: 'Copilot failed to generate a response.' });
+    console.warn('Gemini Chat Warning (falling back to dynamic responder):', error?.message || error);
+    return res.json({ reply: getChatFallback() });
   }
 });
 
