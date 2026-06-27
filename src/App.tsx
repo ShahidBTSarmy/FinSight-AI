@@ -31,14 +31,21 @@ export default function App() {
       setIsChecking(true);
       try {
         const res = await fetch('/api/analyze?q=apple');
+        if (!res.ok) {
+          throw new Error(`Server responded with status ${res.status}`);
+        }
+        const contentType = res.headers.get("content-type");
+        if (!contentType || !contentType.includes("application/json")) {
+          throw new Error("Response was not JSON format");
+        }
         const data = await res.json();
         if (data && data.ticker) {
           // If response has no "Emulation" note in any field, set hasApiKey to true
           const isEmulated = data.note && data.note.toLowerCase().includes('emulation');
           setHasApiKey(!isEmulated);
         }
-      } catch (err) {
-        console.error("API check failed:", err);
+      } catch (err: any) {
+        console.warn("API key check handled gracefully:", err.message || err);
         setHasApiKey(false);
       } finally {
         setIsChecking(false);
@@ -51,13 +58,20 @@ export default function App() {
     setIsChecking(true);
     try {
       const res = await fetch('/api/analyze?q=apple');
+      if (!res.ok) {
+        throw new Error(`Server status ${res.status}`);
+      }
+      const contentType = res.headers.get("content-type");
+      if (!contentType || !contentType.includes("application/json")) {
+        throw new Error("Response is not JSON");
+      }
       const data = await res.json();
       if (data && data.ticker) {
         const isEmulated = data.note && data.note.toLowerCase().includes('emulation');
         setHasApiKey(!isEmulated);
       }
     } catch (err) {
-      console.error(err);
+      console.warn("Refresh status handled gracefully:", err);
       setHasApiKey(false);
     } finally {
       setIsChecking(false);
@@ -74,6 +88,13 @@ export default function App() {
 
     try {
       const res = await fetch(`/api/analyze?q=${encodeURIComponent(query.trim())}`);
+      if (!res.ok) {
+        throw new Error(`Server responded with status ${res.status}`);
+      }
+      const contentType = res.headers.get("content-type");
+      if (!contentType || !contentType.includes("application/json")) {
+        throw new Error("Response is not JSON format");
+      }
       const data = await res.json();
       if (data && data.ticker) {
         setActiveCompany(data);
@@ -110,6 +131,13 @@ export default function App() {
     setActiveTab('analyzer');
     try {
       const res = await fetch('/api/analyze?q=apple');
+      if (!res.ok) {
+        throw new Error(`Server responded with status ${res.status}`);
+      }
+      const contentType = res.headers.get("content-type");
+      if (!contentType || !contentType.includes("application/json")) {
+        throw new Error("Response is not JSON format");
+      }
       const data = await res.json();
       if (data && data.ticker) {
         setActiveCompany(data);
@@ -121,7 +149,7 @@ export default function App() {
         setHasApiKey(!isEmulated);
       }
     } catch (err) {
-      console.error(err);
+      console.warn("Demo loading handled gracefully:", err);
     } finally {
       setIsLoading(false);
     }
