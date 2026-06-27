@@ -1,0 +1,6 @@
+{
+  "name": "FinSight AI",
+  "description": "Institutional grade financial intelligence terminal featuring predictive AI-driven market sentiment, portfolio health analysis, opportunity scanning, and risk radar.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
