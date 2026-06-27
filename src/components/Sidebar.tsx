@@ -1,52 +1,56 @@
 import React from 'react';
 import { 
+  Home, 
   TrendingUp, 
-  Briefcase, 
-  ShieldAlert, 
-  Globe, 
-  SearchCode, 
-  Terminal, 
-  Activity,
-  Cpu,
-  Layers,
-  Sparkles,
-  Home
+  Cpu, 
+  Flame, 
+  Compass, 
+  Sliders, 
+  MessageSquareCode, 
+  FolderHeart, 
+  Settings2,
+  Lock,
+  Workflow
 } from 'lucide-react';
 
 interface SidebarProps {
   activeTab: string;
   setActiveTab: (tab: string) => void;
-  unreadAlertsCount: number;
+  hasApiKey: boolean;
 }
 
-export default function Sidebar({ activeTab, setActiveTab, unreadAlertsCount }: SidebarProps) {
+export default function Sidebar({ activeTab, setActiveTab, hasApiKey }: SidebarProps) {
   const navItems = [
-    { id: 'home', label: 'Command Home', icon: Home, description: 'Advisor overview & guide' },
-    { id: 'markets', label: 'Market Intelligence', icon: TrendingUp, description: 'Live sentiments & indices' },
-    { id: 'portfolio', label: 'Portfolio Health', icon: Briefcase, description: 'Stress-testing & resilience' },
-    { id: 'oracle', label: 'Oracle Research', icon: Terminal, description: 'Interactive GenAI insights' },
-    { id: 'esg', label: 'Alexandria ESG', icon: Globe, description: 'Governance & carbon' },
-    { id: 'opportunities', label: 'Opportunity Scanner', icon: SearchCode, description: 'Underpriced anomalies' },
-    { id: 'risks', label: 'Risk Radar', icon: ShieldAlert, description: 'Geopolitical & macro alerts' },
+    { id: 'home', label: 'Platform Home', icon: Home, description: 'SaaS overview & strategy' },
+    { id: 'dashboard', label: 'Executive Dashboard', icon: TrendingUp, description: 'Search & key takeaways' },
+    { id: 'analyzer', label: 'AI Company Analyzer', icon: Cpu, description: 'Investment intelligence scores' },
+    { id: 'sentiment', label: 'Sentiment Intel', icon: Flame, description: 'Bullish & bearish summary' },
+    { id: 'competitors', label: 'Competitor Analysis', icon: Compass, description: 'Side-by-side comparison' },
+    { id: 'simulator', label: 'Economic Simulator', icon: Sliders, description: 'Projected macro impacts' },
+    { id: 'copilot', label: 'AI Investment Copilot', icon: MessageSquareCode, description: 'Quantitative Q&A Chat' },
+    { id: 'reports', label: 'Intelligence Reports', icon: FolderHeart, description: 'Saved company analyses' },
+    { id: 'settings', label: 'System Settings', icon: Settings2, description: 'API configuration & state' },
   ];
 
   return (
-    <aside id="sidebar-panel" className="w-72 bg-white border-r border-slate-200/70 flex flex-col justify-between h-full text-slate-700 font-sans shrink-0">
-      <div className="flex flex-col">
-        {/* Header Branding */}
-        <div className="p-6 border-b border-slate-100 flex items-center space-x-3 bg-slate-50/20">
-          <div className="p-2.5 bg-indigo-600 rounded-xl text-white shadow-sm shadow-indigo-200/50 flex items-center justify-center">
-            <Sparkles className="w-5 h-5" />
+    <aside id="sidebar-container" className="w-80 h-full bg-[#0a0a0f] border-r border-[#1e1e2d] flex flex-col justify-between shrink-0 font-sans text-slate-400 select-none">
+      {/* Brand Header */}
+      <div>
+        <div className="p-6 border-b border-[#1e1e2d] flex items-center space-x-3.5 bg-gradient-to-r from-[#0d0d15] to-[#0a0a0f]">
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white font-display font-black text-lg shadow-md shadow-blue-900/30 glow-blue">
+            F
           </div>
           <div className="text-left">
-            <h1 className="font-display font-extrabold tracking-tight text-slate-950 text-md leading-none">FinSight <span className="text-indigo-600 font-medium">AI</span></h1>
-            <p className="text-[9px] font-mono text-indigo-600 font-bold uppercase tracking-widest mt-1">Macro Advisory Core</p>
+            <h1 className="font-display font-extrabold tracking-tight text-white text-md leading-none">
+              FinSight <span className="bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent font-semibold">AI</span>
+            </h1>
+            <p className="text-[9px] font-mono text-indigo-400 font-bold uppercase tracking-widest mt-1">Investment Intelligence</p>
           </div>
         </div>
 
         {/* Navigation Items */}
-        <nav className="p-4 space-y-1.5">
-          <div className="text-[10px] font-mono text-slate-400 uppercase px-3.5 mb-3.5 tracking-widest font-semibold">Advisory Modules</div>
+        <nav className="p-4 space-y-1 overflow-y-auto max-h-[60vh] scrollbar-none">
+          <div className="text-[10px] font-mono text-slate-500 uppercase px-3 mb-3 tracking-widest font-bold">RESEARCH DIRECTIVES</div>
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = activeTab === item.id;
@@ -55,24 +59,23 @@ export default function Sidebar({ activeTab, setActiveTab, unreadAlertsCount }: 
                 key={item.id}
                 id={`nav-${item.id}`}
                 onClick={() => setActiveTab(item.id)}
-                className={`w-full flex items-center justify-between px-3.5 py-3 rounded-xl transition-all duration-200 text-left group cursor-pointer ${
+                className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl transition-all duration-200 text-left group cursor-pointer ${
                   isActive 
-                    ? 'bg-slate-900 text-white font-semibold shadow-sm' 
-                    : 'hover:bg-slate-50 hover:text-slate-950 text-slate-500'
+                    ? 'bg-gradient-to-r from-[#171727] to-[#12121f] text-white border border-[#2b2b45] shadow-lg shadow-black/40' 
+                    : 'hover:bg-[#12121c]/60 hover:text-slate-200 border border-transparent'
                 }`}
               >
                 <div className="flex items-center space-x-3.5 overflow-hidden">
-                  <Icon className={`w-4.5 h-4.5 shrink-0 transition-colors ${isActive ? 'text-indigo-400' : 'text-slate-400 group-hover:text-slate-900'}`} />
+                  <Icon className={`w-4.5 h-4.5 shrink-0 transition-colors ${isActive ? 'text-blue-400' : 'text-slate-500 group-hover:text-slate-300'}`} />
                   <div className="overflow-hidden">
-                    <div className={`text-[13px] font-semibold leading-tight tracking-tight ${isActive ? 'text-white' : 'text-slate-800 group-hover:text-slate-950'}`}>{item.label}</div>
-                    <div className={`text-[10px] font-sans mt-0.5 truncate ${isActive ? 'text-slate-400' : 'text-slate-400 group-hover:text-slate-500'}`}>{item.description}</div>
+                    <div className={`text-[12.5px] font-bold leading-tight tracking-tight ${isActive ? 'text-white' : 'text-slate-300 group-hover:text-white'}`}>
+                      {item.label}
+                    </div>
+                    <div className={`text-[9.5px] font-sans mt-0.5 truncate ${isActive ? 'text-slate-400' : 'text-slate-500 group-hover:text-slate-400'}`}>
+                      {item.description}
+                    </div>
                   </div>
                 </div>
-                {item.id === 'risks' && unreadAlertsCount > 0 && (
-                  <span className="shrink-0 ml-1.5 bg-rose-600 text-white text-[9px] font-mono font-bold rounded-full px-1.5 py-0.5 leading-none min-w-[18px] text-center animate-pulse shadow-sm shadow-rose-250">
-                    {unreadAlertsCount}
-                  </span>
-                )}
               </button>
             );
           })}
@@ -80,21 +83,18 @@ export default function Sidebar({ activeTab, setActiveTab, unreadAlertsCount }: 
       </div>
 
       {/* Elegant, clean Footer */}
-      <div className="p-5 border-t border-slate-100 bg-slate-50/40 space-y-3.5">
-        <div className="flex items-center justify-between px-1 text-[10px] font-mono">
-          <span className="text-slate-400 uppercase tracking-widest font-semibold">Data Stream:</span>
-          <span className="text-emerald-600 flex items-center space-x-1 font-bold">
-            <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full inline-block animate-pulse"></span>
-            <span className="tracking-wider">ACTIVE</span>
+      <div className="p-4 border-t border-[#1e1e2d] bg-[#07070b] space-y-3">
+        <div className="flex items-center justify-between px-1 text-[9.5px] font-mono">
+          <span className="text-slate-500 uppercase tracking-widest font-bold">AI COGNITIVE RATIO:</span>
+          <span className={`${hasApiKey ? 'text-emerald-400' : 'text-amber-400'} flex items-center space-x-1.5 font-bold`}>
+            <span className={`w-1.5 h-1.5 ${hasApiKey ? 'bg-emerald-500' : 'bg-amber-500 animate-pulse'} rounded-full inline-block`}></span>
+            <span className="tracking-wider uppercase">{hasApiKey ? 'REAL-TIME PRO' : 'EMULATOR HYBRID'}</span>
           </span>
         </div>
-        <div className="flex items-center justify-between px-1 text-[10px] font-mono">
-          <span className="text-slate-400 uppercase tracking-widest font-semibold">Oracle Brain:</span>
-          <span className="text-indigo-600 font-bold tracking-wider">GEMINI 3.5</span>
-        </div>
-        <div className="p-3 bg-white rounded-xl border border-slate-200/50 flex items-center space-x-2 text-[10px] font-mono text-slate-500 shadow-3xs">
-          <Activity className="w-3.5 h-3.5 text-indigo-500 shrink-0" />
-          <span className="font-medium text-slate-600">Institutional Gateway proxy</span>
+        
+        <div className="p-3 bg-[#0d0d14] rounded-xl border border-[#1e1e2d] flex items-center space-x-2.5 text-[9.5px] font-mono text-slate-400 shadow-inner">
+          <Workflow className="w-3.5 h-3.5 text-blue-500 shrink-0" />
+          <span className="font-semibold text-slate-300">FinSight Enterprise Pipeline v3.5</span>
         </div>
       </div>
     </aside>

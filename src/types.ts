@@ -1,89 +1,63 @@
-export interface MarketIndex {
-  symbol: string;
+export interface Competitor {
   name: string;
-  price: number;
-  change: number;
-  changePercent: number;
-  sentiment: 'Bullish' | 'Neutral' | 'Bearish';
-  sentimentScore: number; // 0 - 100
-  volume: string;
-  peRatio: number;
-  volatility: number; // VIX or implied volatility %
-  chartData: { time: string; value: number }[];
+  revenue: string;
+  profitability: string;
+  risk: string;
+  growth: string;
+  advantages: string[];
 }
 
-export interface PortfolioAsset {
-  symbol: string;
-  name: string;
-  shares: number;
-  avgPrice: number;
-  currentPrice: number;
-  value: number;
-  allocation: number; // percentage
-  dailyChange: number;
-  dailyChangePercent: number;
-  beta: number; // market sensitivity
-  sector: string;
-  esgScore: number; // 0 - 100
-  esgGrade: 'AAA' | 'AA' | 'A' | 'BBB' | 'BB' | 'B' | 'CCC';
+export interface CompanyScores {
+  growth: number;
+  financialHealth: number;
+  risk: number; // 0 - 100, where higher is more risk
+  competitiveStrength: number;
+  valuation: number;
 }
 
-export interface StressScenario {
+export interface NewsSentiment {
+  bullish: number; // 0 - 100
+  bearish: number; // 0 - 100
+  neutral: number; // 0 - 100
+  summary: string;
+}
+
+export interface EconomicImpact {
+  inflation: number; // projected % change in performance under +2% inflation
+  interestRate: number; // projected % change under +1.5% interest rate hike
+  currency: number; // projected % change under +5% currency strengthening
+  oil: number; // projected % change under +20% oil price shock
+  gdp: number; // projected % change under +1% GDP growth rate
+}
+
+export interface CompanyReport {
+  companyName: string;
+  ticker: string;
+  investmentScore: number; // 0 - 100
+  scores: CompanyScores;
+  summary: string;
+  sentiment: NewsSentiment;
+  financials: {
+    revenue: string;
+    profitability: string;
+    debt: string;
+  };
+  competitors: Competitor[];
+  economicImpact: EconomicImpact;
+  economicImpactExplanations: {
+    inflation: string;
+    interestRate: string;
+    currency: string;
+    oil: string;
+    gdp: string;
+  };
+  keyTakeaways: string[];
+  note?: string;
+}
+
+export interface CopilotMessage {
   id: string;
-  name: string;
-  description: string;
-  gdpImpact: number; // % change
-  inflationImpact: number; // % change
-  interestRateImpact: number; // basis points change
-  marketImpact: number; // index change
-  assetImpacts: { [symbol: string]: number }; // percentage change for each asset
-  probability: number; // %
-}
-
-export interface OpportunityAnomaly {
-  symbol: string;
-  name: string;
-  sector: string;
-  price: number;
-  peRatio: number;
-  sentimentScore: number; // AI Sentiment Score 0-100
-  valuationScore: number; // 0-100 (higher is more undervalued)
-  rsi: number;
-  recommendation: 'STRONG BUY' | 'ACCUMULATE' | 'HOLD' | 'REDUCE';
-  catalyst: string;
-}
-
-export interface EsgFactor {
-  company: string;
-  symbol: string;
-  environmentalScore: number;
-  socialScore: number;
-  governanceScore: number;
-  totalScore: number;
-  grade: 'AAA' | 'AA' | 'A' | 'BBB' | 'BB' | 'B';
-  carbonIntensity: number; // tCO2e / $M revenue
-  boardDiversity: number; // %
-  complianceRating: string;
-  highlights: string[];
-}
-
-export interface RiskAlert {
-  id: string;
-  title: string;
-  category: 'Geopolitical' | 'Macroeconomic' | 'Regulatory' | 'Liquidity' | 'Operational';
-  severity: 'Critical' | 'High' | 'Medium' | 'Low';
-  description: string;
-  probability: number; // %
-  impactTimeframe: string;
-  hedgingStrategy: string;
+  role: 'user' | 'assistant';
+  content: string;
   timestamp: string;
-}
-
-export interface ChatMessage {
-  id: string;
-  sender: 'user' | 'assistant';
-  text: string;
-  timestamp: string;
-  sources?: string[];
-  suggestions?: string[];
 }
